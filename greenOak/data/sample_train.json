@@ -1,0 +1,64 @@
+{
+    "test_cases": [
+        {
+            "feature_description": "User login functionality with two-factor authentication",
+            "feature_type": "UI",
+            "test_type": "End-to-End Testing",
+            "domain": "Fintech",
+            "scenario": "Verify user login with valid credentials and 2FA",
+            "steps": [
+                "Enter valid username",
+                "Enter valid password",
+                "Click login button",
+                "Enter valid 2FA code",
+                "Submit 2FA verification"
+            ],
+            "expected_results": [
+                "User successfully logged in",
+                "Dashboard is displayed",
+                "User session is created"
+            ],
+            "test_data": {
+                "username": "test@example.com",
+                "password": "ValidPass123!",
+                "2fa_code": "123456"
+            },
+            "requirements": [
+                "2FA must be enabled",
+                "Password must meet complexity requirements",
+                "Session timeout after 30 minutes"
+            ]
+        },
+        {
+            "feature_description": "Patient record update in electronic health record system",
+            "feature_type": "API",
+            "test_type": "Integration Testing",
+            "domain": "Healthcare",
+            "scenario": "Update patient medical history through API",
+            "steps": [
+                "Authenticate API request",
+                "Retrieve existing patient record",
+                "Update medical history",
+                "Save changes",
+                "Verify audit trail"
+            ],
+            "expected_results": [
+                "Patient record updated successfully",
+                "Audit log created",
+                "Notification sent to primary physician"
+            ],
+            "test_data": {
+                "patient_id": "P123456",
+                "medical_history": {
+                    "condition": "Hypertension",
+                    "diagnosis_date": "2024-01-15"
+                }
+            },
+            "requirements": [
+                "HIPAA compliance",
+                "Data encryption",
+                "Audit logging"
+            ]
+        }
+    ]
+}

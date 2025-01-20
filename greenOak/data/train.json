@@ -1,0 +1,166 @@
+{
+    "test_cases": [
+        {
+            "feature_description": "User login functionality with two-factor authentication",
+            "feature_type": "UI",
+            "test_type": "End-to-End Testing",
+            "domain": "Fintech",
+            "scenario": "Verify user login with valid credentials and 2FA",
+            "steps": [
+                "Enter valid username",
+                "Enter valid password",
+                "Click login button",
+                "Enter valid 2FA code",
+                "Submit 2FA verification"
+            ],
+            "expected_results": [
+                "User successfully logged in",
+                "Dashboard is displayed",
+                "User session is created"
+            ],
+            "test_data": {
+                "username": "test@example.com",
+                "password": "ValidPass123!",
+                "2fa_code": "123456"
+            },
+            "requirements": [
+                "2FA must be enabled",
+                "Password must meet complexity requirements",
+                "Session timeout after 30 minutes"
+            ]
+        },
+        {
+            "feature_description": "Patient record update in electronic health record system",
+            "feature_type": "API",
+            "test_type": "Integration Testing",
+            "domain": "Healthcare",
+            "scenario": "Update patient medical history through API",
+            "steps": [
+                "Authenticate API request",
+                "Retrieve existing patient record",
+                "Update medical history",
+                "Save changes",
+                "Verify audit trail"
+            ],
+            "expected_results": [
+                "Patient record updated successfully",
+                "Audit log created",
+                "Notification sent to primary physician"
+            ],
+            "test_data": {
+                "patient_id": "P123456",
+                "medical_history": {
+                    "condition": "Hypertension",
+                    "diagnosis_date": "2024-01-15"
+                }
+            },
+            "requirements": [
+                "HIPAA compliance",
+                "Data encryption",
+                "Audit logging"
+            ]
+        },
+        {
+            "feature_description": "Product checkout with multiple payment methods",
+            "feature_type": "UI",
+            "test_type": "End-to-End Testing",
+            "domain": "E-commerce",
+            "scenario": "Complete purchase with credit card payment",
+            "steps": [
+                "Add items to cart",
+                "Proceed to checkout",
+                "Enter shipping details",
+                "Select credit card payment",
+                "Enter card details",
+                "Confirm order"
+            ],
+            "expected_results": [
+                "Order placed successfully",
+                "Payment processed",
+                "Order confirmation email sent",
+                "Inventory updated"
+            ],
+            "test_data": {
+                "cart_items": [
+                    {"id": "PROD123", "quantity": 2},
+                    {"id": "PROD456", "quantity": 1}
+                ],
+                "payment_info": {
+                    "card_type": "VISA",
+                    "card_number": "4111111111111111",
+                    "expiry": "12/25"
+                }
+            },
+            "requirements": [
+                "PCI compliance",
+                "SSL encryption",
+                "Order tracking enabled"
+            ]
+        },
+        {
+            "feature_description": "Manufacturing quality control inspection",
+            "feature_type": "Mobile",
+            "test_type": "Integration Testing",
+            "domain": "Manufacturing",
+            "scenario": "Quality inspection using mobile app",
+            "steps": [
+                "Scan product QR code",
+                "Capture product images",
+                "Fill inspection checklist",
+                "Submit inspection report",
+                "Sync with central system"
+            ],
+            "expected_results": [
+                "Inspection report created",
+                "Images uploaded successfully",
+                "Quality metrics updated",
+                "Notifications sent to supervisors"
+            ],
+            "test_data": {
+                "product_id": "MFG789",
+                "inspection_points": [
+                    "Dimensions",
+                    "Surface finish",
+                    "Assembly quality"
+                ],
+                "images": ["front.jpg", "side.jpg", "detail.jpg"]
+            },
+            "requirements": [
+                "Offline capability",
+                "Image compression",
+                "Real-time sync when online"
+            ]
+        },
+        {
+            "feature_description": "Student assignment submission system",
+            "feature_type": "UI",
+            "test_type": "End-to-End Testing",
+            "domain": "Education",
+            "scenario": "Submit assignment with attachments",
+            "steps": [
+                "Login to student portal",
+                "Navigate to assignment section",
+                "Upload assignment files",
+                "Add submission comments",
+                "Submit assignment"
+            ],
+            "expected_results": [
+                "Assignment submitted successfully",
+                "Files uploaded and virus-scanned",
+                "Submission timestamp recorded",
+                "Confirmation email sent"
+            ],
+            "test_data": {
+                "student_id": "STU123",
+                "course_id": "CS101",
+                "assignment_id": "ASG456",
+                "files": ["report.pdf", "code.zip"]
+            },
+            "requirements": [
+                "File size limits",
+                "Supported file types",
+                "Plagiarism check integration"
+            ]
+        }
+    ]
+}

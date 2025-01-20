@@ -2,11 +2,15 @@ import streamlit as st
 import json
 from openai import OpenAI
 from typing import Dict
+import os
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
 class TestCaseGenerator:
     def __init__(self, api_key: str):
         """Initialize the generator with OpenAI API key"""
-        self.client = OpenAI(api_key="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")
+        self.client = OpenAI(api_key=os.getenv('OPENAI_API_KEY')
     
     def generate_test_scenarios(self, feature_description: str, feature_type: str) -> Dict:
         """Generate test scenarios based on feature description and type"""

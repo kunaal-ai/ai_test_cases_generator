@@ -65,7 +65,10 @@ python -m src.train \
 
 3. Run the web interface:
 ```bash
-streamlit run src/app.py
+python -m src.train \
+    --train_data data/train.json \
+    --val_data data/val.json \
+    --output_dir models/
 ```
 
 ## 📝 Data Format

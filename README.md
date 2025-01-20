@@ -2,6 +2,8 @@
 
 # This is Project Garuda
 
+![App UI](app_preview.png)
+
 > Transform feature descriptions into comprehensive test scenarios with AI-powered intelligence
 
 Garuda is an innovative test case generator that leverages OpenAI's GPT-4 to create detailed, context-aware test scenarios and test data. Whether you're testing UI components, APIs, databases, mobile apps, or complex integrations, Garuda helps you generate thorough test cases with just a few clicks.

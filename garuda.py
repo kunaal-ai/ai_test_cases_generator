@@ -1,6 +1,5 @@
 import streamlit as st
 import json
-from openai import OpenAI
 from typing import Dict
 import os
 from dotenv import load_dotenv

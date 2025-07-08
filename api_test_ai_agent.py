@@ -422,13 +422,6 @@ def main():
                             st.write("**Error:**")
                             st.error(result['error'])
             
-    
-    elif st.session_state.test_submitted and not st.session_state.get('test_blocks'):
-        with st.spinner("Generating test cases..."):
-            # This block will be handled by the main test_submitted check above
-            pass
-    else:
-        st.info("👈 Enter a feature description and click 'Generate with AI' or 'Load Sample Data' to get started.")
 
 def run_all_tests() -> bool:
     """Run all test blocks and update results"""

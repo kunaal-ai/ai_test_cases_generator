@@ -143,7 +143,7 @@ class TestCaseGenerator:
         2. Steps: {', '.join(test_case['steps'])}
         3. Expected Results: {', '.join(test_case['expected_results'])}
 
-        Please generate test data in the following JSON format:
+        IMPORTANT: Your response must be a valid JSON object that follows this exact structure:
         {{
             "test_inputs": [
                 {{
@@ -202,15 +202,70 @@ class TestCaseGenerator:
         """
 
         try:
+            # First, try to get the model from environment variable or use gpt-4 as default
+            model = os.getenv('OPENAI_MODEL', 'gpt-4')
+            
+            # Update the prompt to be more explicit about the JSON format
+            json_prompt = f"""You must respond with a valid JSON object that follows this exact structure:
+            {json.dumps({
+                "test_inputs": [{"name": "", "description": "", "data_type": "", "valid_values": [], "invalid_values": [], "edge_cases": [], "constraints": []}],
+                "test_payloads": [{"scenario": "", "description": "", "payload": {}, "expected_response": {}}],
+                "mock_data": [{"type": "", "description": "", "data": {}}],
+                "environment_setup": {"database": [], "files": [], "configurations": [], "external_services": []}
+            }, indent=2)}
+            
+            {prompt}
+            
+            Respond with ONLY the JSON object, without any markdown formatting or additional text."""
+            
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model=model,
                 messages=[
-                    {"role": "system", "content": "You are a QA expert who creates comprehensive and realistic test data."},
-                    {"role": "user", "content": prompt}
+                    {"role": "system", "content": "You are a QA expert who creates comprehensive and realistic test data. You must respond with a valid JSON object that matches the required structure exactly."},
+                    {"role": "user", "content": json_prompt}
                 ],
                 temperature=0.7
             )
-            return json.loads(response.choices[0].message.content)
+            
+            # Get the response content
+            response_content = response.choices[0].message.content.strip()
+            
+            # Clean the response to extract JSON if it's wrapped in markdown code blocks
+            if '```json' in response_content:
+                response_content = response_content.split('```json')[1].split('```')[0].strip()
+            elif '```' in response_content:
+                response_content = response_content.split('```')[1].split('```')[0].strip()
+                
+            # Parse the JSON with better error handling
+            try:
+                return json.loads(response_content)
+            except json.JSONDecodeError as e:
+                # Try to extract JSON from the response
+                try:
+                    # Look for JSON object in the response
+                    import re
+                    json_match = re.search(r'\{(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*\}', response_content)
+                    if json_match:
+                        return json.loads(json_match.group(0))
+                    else:
+                        # Try to clean up common formatting issues
+                        cleaned = re.sub(r'^[^{]*', '', response_content)  # Remove everything before first {
+                        cleaned = re.sub(r'[^}]*$', '', cleaned)  # Remove everything after last }
+                        if cleaned:
+                            return json.loads(cleaned)
+                        raise Exception("No valid JSON object found in response")
+                except Exception as inner_e:
+                    # If we still can't parse, provide a helpful error message
+                    error_msg = f"""
+                    Failed to parse JSON response. Please ensure the response is valid JSON.
+                    
+                    Error: {str(inner_e)}
+                    
+                    Response content was:
+                    {response_content}
+                    """
+                    raise Exception(error_msg) from None
+                
         except Exception as e:
             raise Exception(f"Failed to generate test data: {str(e)}")
 

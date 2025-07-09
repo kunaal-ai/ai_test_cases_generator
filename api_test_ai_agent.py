@@ -163,9 +163,24 @@ def main():
     st.set_page_config(layout="wide", page_title="API Test Agent")
     init_session_state()
     
-    if not (api_key := os.getenv('OPENAI_API_KEY')):
-        st.error("Please set OPENAI_API_KEY in your .env file")
-        return
+
+    # Get API key from environment or user input
+    api_key = os.getenv('OPENAI_API_KEY')
+    if not api_key:
+        st.sidebar.subheader("OpenAI API Key")
+        api_key = st.sidebar.text_input(
+            "Enter your OpenAI API key:",
+            type="password",
+            placeholder="sk-...",
+            help="You can find your API key at https://platform.openai.com/account/api-keys"
+        )
+        if not api_key:
+            st.warning("Please enter your OpenAI API key to continue")
+            return
+    
+    # Store API key in session state for reuse
+    st.session_state.openai_api_key = api_key
+    
     
     render_sidebar(api_key)
     
